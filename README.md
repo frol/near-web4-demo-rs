@@ -11,16 +11,14 @@ When you deploy on mainnet, you should be able to use https://ACCOUNT_ID.near.pa
 
 ## Build
 
-See [near-sdk docs](https://near-sdk.io) for the prerequisites, and then build the contract:
+See [near-sdk docs](https://docs.near.org/build/smart-contracts/quickstart) for the prerequisites, and then build the contract using [`cargo-near` extension](https://github.com/near/cargo-near):
 
 ```
-$ cargo build --target wasm32-unknown-unknown --release
+$ cargo near build
 ```
 
 ## Deploy
 
-Using [near-cli-rs](https://near.cli.rs) you can deploy the contract to your account:
-
 ```
-$ near-cli add contract-code network testnet account ACCOUNT_ID.testnet contract-file ./target/wasm32-unknown-unknown/release/web4_demo.wasm no-initialize sign-with-keychain
+$ cargo near deploy
 ```

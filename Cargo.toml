@@ -2,11 +2,12 @@
 name = "web4-demo"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/frol/near-web4-demo-rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-near-sdk = "4.0.0-pre.7"
+near-sdk = "5.8.0"
 
 [lib]
 crate-type = ["cdylib"]
@@ -20,4 +21,22 @@ debug = false
 panic = "abort"
 # Opt into extra safety checks on arithmetic operations https://stackoverflow.com/a/64136471/249801
 overflow-checks = true
+
+# fields to configure build with WASM reproducibility, according to specs  
+# in https://github.com/near/NEPs/blob/master/neps/nep-0330.md 
+[package.metadata.near.reproducible_build]
+# docker image, descriptor of build environment
+image = "sourcescan/cargo-near:0.13.3-rust-1.84.1"
+# tag after colon above serves only descriptive purpose; image is identified by digest
+image_digest = "sha256:baa712c5d2b7522d38175e36330d336ad2c4ce32bfaaa41af94ce40407ecd803"
+# list of environment variables names, whose values, if set, will be used as external build parameters
+# in a reproducible manner
+# supported by `sourcescan/cargo-near:0.10.1-rust-1.82.0` image or later images
+passed_env = []
+# build command inside of docker container 
+# if docker image from default gallery is used https://hub.docker.com/r/sourcescan/cargo-near/tags,
+# the command may be any combination of flags of `cargo-near`,
+# supported by respective version of binary inside the container besides `--no-locked` flag
+container_build_command = ["cargo", "near", "build", "non-reproducible-wasm", "--locked"]
+
 
